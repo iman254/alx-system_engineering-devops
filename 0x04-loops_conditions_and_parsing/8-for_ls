@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#display the content of the current working directory by bash
+a=$(ls)
+for item in $a
+do 
+    echo "$item" | cut -d "-" -f 2
+done 
