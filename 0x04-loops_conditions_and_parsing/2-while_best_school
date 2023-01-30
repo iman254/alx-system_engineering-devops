@@ -2,8 +2,9 @@
 #This script outputs Best School using while, 10 times
 
 x=0
-while ((1 > 10)) 
+
+while [ "$x" -le 10 ]
 do
     echo "Best School"
-    (($x++))
+    ((x++))
 done
