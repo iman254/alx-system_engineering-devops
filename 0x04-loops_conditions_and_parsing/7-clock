@@ -2,7 +2,9 @@
 #bash script that outputs hours and minutes
 
 hrs=0
-while [ "$hrs" -le 13 ];do
+while [ "$hrs" -le 12 ]; do
+    echo "Hour: $hrs"
+
     mins=1
     while [ $mins -lt 60 ];do
         echo "$mins"
