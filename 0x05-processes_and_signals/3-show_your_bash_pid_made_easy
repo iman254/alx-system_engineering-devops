@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#easy way to show pid and process beginning with bash
+
+pgrep -l bash
