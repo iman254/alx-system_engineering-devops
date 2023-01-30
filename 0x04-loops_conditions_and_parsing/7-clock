@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
 #bash script that outputs hours and minutes
 
-hrs=1
-while [ "$hrs" -le 13 ];
-do
+hrs=0
+while [ "$hrs" -le 12 ];do
     mins=1
-    echo "Hour: $hrs"
-    while [ $mins -lt 60 ]
-    do
+    while [ $mins -lt 60 ];do
         echo "$mins"
         ((mins++))
     done
