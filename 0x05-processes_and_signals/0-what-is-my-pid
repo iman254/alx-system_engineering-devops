@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#script to display its current pid
+
+echo $BASHPID
