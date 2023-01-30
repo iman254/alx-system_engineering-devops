@@ -2,7 +2,7 @@
 #bash script used to check for file existence and navigation
 
 file="school"
-if [-e $file ];
+if [ -e $file ];
 then
     echo "school file exists"
     if [ -s $file ];
