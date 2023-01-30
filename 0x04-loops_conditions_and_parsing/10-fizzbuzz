@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#bash script that can manipulate fizzbuzz
+
+
+for num in {1..100}
+do
+    if ! (( num % 3)) && ! (( num % 5 )); then 
+        echo "FizzBuzz"
+    elif ! (( num % 3)); then
+        echo "Fizz"
+    elif ! (( num % 5)); then
+        echo "Buzz"
+    else
+        echo $num
+    fi
+done
