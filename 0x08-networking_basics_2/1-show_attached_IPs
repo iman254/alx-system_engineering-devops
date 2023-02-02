@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+#displays all the active IPV4 addresses on the machine
+
+ip -4 addr show | awk '[print $4}' | cut -d "/" -f 1
