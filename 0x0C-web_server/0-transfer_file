@@ -2,8 +2,7 @@
 #scrpt that transdfers program from client to server.
 
 num=3
-if [ "$#" -lt "$num" ]
-then
+if [ "$#" -lt "$num" ];then 
     echo 'usage: 0-transfer_file PATH_TO_FILE IP USER PATH_TO_SSh_KEY'
 else
     scp -i "$4" -o StrictHostKeyChecking=no "$1" "$3"@"2":~/
