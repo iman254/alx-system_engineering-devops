@@ -1,31 +1,29 @@
-#!/usr/bin/env bash
-#script that configures nginx so that its HTTP response that 
-#contains a custom header (on both web1 and web2)
-#where the name of the custom http header must be x-served-By
-#and the value of the custom http header must be the hostname
-#of the server Nginx is running on
+#!/usr/bun/env bash
 
-#installation of nginx
-sudo apt-get -y update
-sudo apt-get -y install nginx
+#define the custom header and value
+header_name="x-Served-By"
+header_value="$(hostname)" 
 
-#create a directory that you will save in it the html page
-echo "Hello World" | sudo tee /var/www/html/index.html
+#install nginx if not installed
 
-#make sure the permission is set right
-chmod -R 755 /var/www
+if ! command -v nginx &> /dev/null
+then
+    sudo apt-get -y update
+    sudo apt-get -y install nginx
+fi
 
-#create a redirection for the website
-sudo sed -i '/server_name _;/a \	location /redirect_me {\n		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n	}' /etc/nginx/sites-available/default
+#create a hello world page
+echo "Hello World!" |sudo tee /var/www/html/index.html
 
-#add a 404 pagethat is custom
-echo "Ceci n'est pas une page" |sudo te /var/www/custom_404.html
+#redirection for the website
+sudo sed -i '/server_name _;/a \    return 301 https://www.youtube.com/watch?v=QH2-TGU1wu4;\n    }' etc/nginx/site-available/default
+#add custom HTTP header file to the nginx config file
+sudo sed -i "http {/a \    add_header $header_name $header_value;" /etc/nginx/nginx.config
 
-#configure nginx to allow the use of 404 redirection page
-sudo sed -i '/server_name _;/a \    errorpage 404/custom_404.html {\n    location = /custom_404.html {\n    internal;\n    }' /etc/nginx/sites-available/default
+#add a custom 404 page
+echo "ceci n'est pas une page" | sudo tee /var/www/html/custom_error.html
 
-#custom header configuration
-sudo sed -i "/^http {/a \    add_header X-Served_By $(hostname);" /etc/nginx/nginx.config
-
-#restart nginx server
-sudo service nginx restart 
+#configure nginx to use the 404 pag
+sudo sed -i "/server {/a \    error_page 404/custom_404.html;" /etc/nginx/sites-available/default
+#restart nginx 
+sudo systemctl restart nginx
