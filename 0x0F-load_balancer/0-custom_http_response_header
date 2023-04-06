@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#script that configures nginx so that its HTTP response that 
+#contains a custom header (on both web1 and web2)
+#where the name of the custom http header must be x-served-By
+#and the value of the custom http header must be the hostname
+#of the server Nginx is running on
+
+#installation of nginx
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+#create a directory that you will save in it the html page
+echo "Hello World" | sudo tee /var/www/html/index.html
+
+#make sure the permission is set right
+chmod -R 755 /var/www
+
+#create a redirection for the website
+sudo sed -i '/server_name _;/a \	location /redirect_me {\n		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n	}' /etc/nginx/sites-available/default
+
+#add a 404 pagethat is custom
+echo "Ceci n'est pas une page" |sudo te /var/www/custom_404.html
+
+#configure nginx to allow the use of 404 redirection page
+sudo sed -i '/server_name _;/a \    errorpage 404/custom_404.html {\n    location = /custom_404.html {\n    internal;\n    }' /etc/nginx/sites-available/default
+
+#custom header configuration
+sudo sed -i "/^http {/a \    add_header X-Served_By $(hostname);" /etc/nginx/nginx.config
+
+#restart nginx server
+sudo service nginx restart 
