@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 #define the custom header and value
 header_name="x-Served-By"
 header_value="$(hostname)" 
