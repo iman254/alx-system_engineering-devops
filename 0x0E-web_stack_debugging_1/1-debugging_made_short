@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#make the first task short and sweet.
+sed -i "s/8080/g" etc/nginx/sites-enabled/default
+service nginx restart
+echo "" > /run/nginx.pid
