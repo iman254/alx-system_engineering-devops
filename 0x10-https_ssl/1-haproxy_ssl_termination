@@ -35,15 +35,15 @@ defaults
 
 # start of parameters for beta-scribbles.tech
 frontend iman254.tech-http-frontend
-	bind	 *:80
+	bind   *:80
 	http-request set-header X-Forwarded-Proto http
-	default_backend	 beta-scribbles.tech-backend
+	default_backend	 iman254.tech-backend
 
 
 frontend  iman254.tech-https-frontend
 	bind *:443 ssl crt /etc/ssl/beta-scribbles.tech.pem
 	http-request set-header X-Forwarded-Proto https
-        default_backend beta-scribbles.tech-backend
+        default_backend iman254.tech-backend
 
 
 backend iman254.tech-backend
