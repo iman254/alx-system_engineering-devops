@@ -1,12 +1,23 @@
 #!/usr/bin/env bash
-# Script to install nginx on server
+# Install Nginx
+#script that configures the nginx server to have a custom 404 page
+if ! command -v nginx &> dev/null
+then
+    sudo apt-get update
+    sudo apt-get install nginx -y
+fi
 
-sudo apt-get update
-sudo apt-get install -y nginx
-echo "Holberton School" >> /var/www/html/index.html
-sed -i '38i\rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+# create a html "hello world" page
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
-sed -i '39i\error_page 404 /error_404.html;' /etc/nginx/sites-available/default
+# create a redirection for our website
+sudo sed -i '/server_name _;/a \	location /redirect_me {\n		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n	}' /etc/nginx/sites-available/default
 
-service nginx start
+# Create a custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html
+
+# Configure Nginx to use the custom 404 page
+sudo sed -i '/server_name _;/a \        error_page 404 /custom_404.html;\n        location = /custom_404.html {\n                internal;\n        }' /etc/nginx/sites-available/default
+
+#restart nginx
+sudo service nginx restart
