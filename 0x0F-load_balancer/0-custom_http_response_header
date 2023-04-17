@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #define the custom header and value
 header_name="X-Served-By"
-header_value="$(hostname)" 
+header_value="$(hostname)"
 
 #install nginx if not installed
 
@@ -15,7 +15,7 @@ fi
 echo "Hello World!" |sudo tee /var/www/html/index.html
 
 #redirection for the website
-sudo sed -i '/server_name _;/a \    location /redirect_me{\n    return 301 https://www.youtube.com/watch?v=QH2-TGU1wu4;\n    }' etc/nginx/sites-available/default
+sudo sed -i '/server_name _;/a \    location /redirect_me{\n    return 301 https://www.youtube.com/watch?v=QH2-TGU1wu4;\n    }' /etc/nginx/sites-available/default
 
 #add a custom 404 page
 echo "ceci n'est pas une page" | sudo tee /var/www/html/custom_error.html
@@ -26,5 +26,5 @@ sudo sed -i "/server_name _;/a \    error_page 404/custom_error.html;\n    locat
 #add custom HTTP header file to the nginx config file
 sudo sed -i "/^http {/a \    add_header $header_name: $header_value;" /etc/nginx/nginx.conf
 
-#restart nginx 
+#restart nginx
 sudo systemctl restart nginx
