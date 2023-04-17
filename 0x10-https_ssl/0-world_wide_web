@@ -2,23 +2,18 @@
 #script that displays information about subdomains
 #it should have domain and subdomain as the argument 
 
-all_subdomains=("www" "lb-01" "web-01" "web-02")
-
-runDig () {
-    subdomain=$1
-    domain=$2
-
-    dig "$subdomain.$domain" |grep -A1 'ANSWER SECTION:' | tail -1 | awk -v s="$subdomain" 'BEGIN {FS = " "} ; { print "The subdomain " s " is a " $4 " record and points to " $5 }'
+dig_domain () {
+    string=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | tail -1)
+    echo "$2 $string" | awk '{print "The subdomain " $1 " is a " $5 " record and points to " $6}'
 }
 
-if [ $# -eq 1 ]; then
-    domain="$1"
-    for i in "${all_subdomains[@]}"
-    do
-        runDig "$i" "$domain"
-    done
-elif [ $# -eq 2 ]; then  
-    domain="$1"
-    subdomain="$2"
-    runDig "$subdomain" "domain"
+if [ "$#" == 1 ]
+then
+  dig_domain "$1" "www"
+  dig_domain "$1" "lb-01"
+  dig_domain "$1" "web-01"
+  dig_domain "$1" "web-02"
+elif [ "$#" == 2 ]
+then
+  dig_domain "$1" "$2"
 fi
