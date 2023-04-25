@@ -17,7 +17,7 @@ if __name__ == "__main__":
     number_completed = 0
 
     for item in emp_todo:
-        if item.get("UserId") == int(emp_id):
+        if item.get("userId") == int(emp_id):
             total_todo += 1
             if item.get("completed") is True:
                 number_completed += 1
