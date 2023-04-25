@@ -8,7 +8,7 @@ import requests
 if __name__ == "__main__":
     emp_id = argv[1]
     emp_url = "https://jsonplaceholder.typicode.com/users/" + emp_id
-    emp_dict = requests.get(user_url).json()
+    emp_dict = requests.get(emp_url).json()
     emp_name = emp_dict.get("name")
     emp_todo = requests.get("https://jsonplaceholder.typicode.com/todos")
     emp_todo = emp_todo.json()
@@ -17,12 +17,12 @@ if __name__ == "__main__":
     number_completed = 0
 
     for item in emp_todo:
-        if item.get("userId") == int(emp_id):
+        if item.get("UserId") == int(emp_id):
             total_todo += 1
             if item.get("completed") is True:
                 number_completed += 1
                 titles_completed.append(item.get("title"))
     print("Employee {} is done with tasks({}/{}):".format(
         emp_name, number_completed, total_todo))
-    for title in completed_titles:
+    for title in titles_completed:
         print("\t {}".format(title))
