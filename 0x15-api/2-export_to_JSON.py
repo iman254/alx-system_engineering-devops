@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """fetching json data from an api"""
 
-import requests
-import json
-from sys import argv
 import csv
+import json
+import requests
+from sys import argv
 
 
 if __name__ == "__main__":
