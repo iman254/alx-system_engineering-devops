@@ -1,4 +1,4 @@
-#!/usr/bun/python3
+#!/usr/bin/python3
 """function that prints top 10 hot posts from subredditt
 """
 
