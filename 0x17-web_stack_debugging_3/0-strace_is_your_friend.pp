@@ -1,8 +1,6 @@
-# a puppet script thats able to replace or rewrite a line
+# a puppet script thats able to i fix500error when get http method is requested to apache
 
-$file_path= '/var/ww/html/wp-setting.php'
-
-exec {'replace_line':
-    command => "sed -i s/phpp/php/g' $(file_path}",
-    path    => ['/bin','/usr/bin']
+exec {'replace':
+    provider => shell,
+    command  => 'sed -i "s/phpp/php/g" /var/www/html/wp-settings.php'
 }
